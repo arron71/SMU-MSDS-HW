@@ -1,0 +1,108 @@
+---
+title: "Live Assignment 3"
+author: "Aaron Cattley"
+date: "January 19, 2019"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+This is the Unit 3 Live Session Assignment.
+
+# Question 1
+  * C:\Users\aaron>mkdir Liveassign3
+  * C:\Users\aaron>cd Liveassign3
+  * C:\Users\aaron\Liveassign3>git clone               
+  * https://github.com/caesar0301/awesome-public-datasets,
+  * Cloning into 'awesome-public-datasets'...
+
+# Question 2
+
+```{r, cache=TRUE}
+df <- read.csv('C:/Users/aaron/Documents/SMU/Intro to Data Science/HW/Unit 3/titanic.csv', header =T, sep = ",")
+
+length(which(df$Sex=='male'))
+length(which(df$Sex=='female'))
+
+apply(subset(df, select=c("Survived", "Age", "Fare")), 2, mean, na.rm=T)
+```
+
+# Plot of Titanic male and female passenger frequency
+
+```{r stackloss, echo=FALSE}
+##Question 2b - Plot frequency of passengers
+
+people <- c(length(which(df$Sex=='male')),length(which(df$Sex=='female')))
+people
+
+barplot(people, main="Passenger Frequency",
+     xlab="Sex",
+     ylab="Frequency",
+     ylim=c(0,891),
+     col="red",
+     names.arg = c("Males", "Females")
+)
+
+```
+
+# Question 3
+
+```{r, cache=TRUE}
+sleepdata <- read.csv('C:/Users/aaron/Documents/SMU/Intro to Data Science/HW/Unit 3/sleep_data_01.csv', header =T, sep = ",")
+
+sleepmedian <- median(sleepdata$Age, na.rm=T)
+maxsleepdur <- max(sleepdata$Duration, na.rm=T)
+minsleepdur <- min(sleepdata$Duration, na.rm=T)
+RSESmean <- mean(sleepdata$RSES, na.rm=T)
+RSESsd <- sd(sleepdata$RSES, na.rm=T)
+report <- data.frame("MedianAge" = sleepmedian/5, "SelfEsteem" = RSESmean/5, "SE_SD" = RSESsd/5, "DurationRange" = maxsleepdur-minsleepdur)
+report<-round(report,2)
+report
+
+```
+
+# Question 4
+```{r, cache=TRUE}
+library(fivethirtyeight)
+
+CG <- college_recent_grads
+
+##I've made multiple attempts to get the vignettes to load correctly, but I have not been succesful.
+vignette("college_recent_grads", package = "fivethirtyeight")
+
+
+dim(CG)
+colnames(CG)
+```
+
+# Question 5
+```{r, cache=TRUE}
+library(plyr)
+
+##The question asks the same question as the previous, or at least that's how I've read it.
+colnames(CG)
+ncol(CG)
+
+major_count <- count(CG$major_category)
+major_count
+
+par(las=2)
+barplot(major_count$freq, main="Distribution of Degree Majors",
+     ylab="Frequency",
+     col="red",
+     names.arg = major_count$x
+)
+
+
+write.csv(fivethirtyeight::college_recent_grads, "college_recent_grads.csv", row.names = F)
+```
+
+# Question 6
+  # https://github.com/arron71/SMU-MSDS-HW.git
+
+
